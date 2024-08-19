@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Serilog.Context;
-using Serilog;
 
 namespace SerilogDemo.Controllers
 {
@@ -23,6 +22,12 @@ namespace SerilogDemo.Controllers
             _log.LogInformation("hello2 {orderId}", "a");
 
             _log.LogInformation("hello3 {orderId}", "b");
+
+            // https://github.com/serilog/serilog/wiki/Enrichment
+            using (LogContext.PushProperty("A", 1))
+            {
+                _log.LogInformation("Carries property A = 1");
+            }
 
             return "ok";
         }
